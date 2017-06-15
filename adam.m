@@ -1,0 +1,39 @@
+function [accuracy,cost_adam,adam_opt,adam_time,cost_test_adam]=adam(train_x,train_y,test_x,test_y,lambda,maxiter)
+[d,n]=size(train_x);
+w=randn(d,1);
+r=zeros(d,1);
+s=zeros(d,1);
+rou1=0.9;
+rou2=0.999;
+w0=w;
+lr=0.01;
+iter=0;
+delta=10e-8;
+cost_adam=zeros(maxiter,2);
+adam_time=zeros(maxiter,1);
+cost_test_adam=zeros(maxiter,1);
+cost=@(x,y,w)sum(log(1+exp(-y.*(x'*w))))/length(y);
+while iter<maxiter
+    tic
+    g=sgd(train_x,train_y,w,lambda);
+    s=rou1.*s+(1-rou1).*g;
+    r=rou2.*r+(1-rou2).*g.*g;
+    iter=iter+1;
+    s_hat=s./(1-rou1^iter);
+    r_hat=r./(1-rou2^iter);
+    g_hat=lr.*(s_hat./(sqrt(r_hat)+delta));
+    w_old=w;
+    w=w_old-g_hat;
+    if iter==1
+        adam_time(iter)=toc;
+    else 
+        adam_time(iter)=adam_time(iter-1)+toc;
+    end
+    cost_test_adam(iter)=cost(test_x,test_y,w);
+    cost_adam(iter,1)=iter;
+    cost_adam(iter,2)=costfun(train_x,train_y,w,lambda);
+end
+pred_labels=sign(test_x'*w);
+accuracy=sum(pred_labels==test_y)/length(test_y);
+adam_opt=costfun(train_x,train_y,w,lambda);
+end

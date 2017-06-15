@@ -1,0 +1,33 @@
+（1）tobinary.m  用于将数据集的label转为{-1,1}
+
+（2）grad_Li.m   用于计算原问题中不加正则项的导数
+
+（3）sgd.m       用于计算原问题的导数，利用次梯度方法
+
+（4）costfun.m   用于计算损失函数的值
+
+（5）loadImages_mnist.m与loadLabels_mnist.m是将MNIST数据集idx3-ubyte格式转换为矩阵(参考了网上的方法)
+
+（6）minist_data.m将MNIST的数据保存为mat格式
+
+（7）covertype_data.py是用python处理的Covertype数据集，因为用python处理非常方便，保存成mat格式
+（8）AdaGrad.m   用于实现AdaGrad算法
+
+（9）adam.m      用于实现adam算法
+
+（10）sgd_bls.m  用于实现回溯线性搜索
+
+（11）data_choose.m  用来选择MNIST或Covertype数据集并划分数据集与测试集,输出统一为[train_x,train_y,test_x,test_y]
+
+ 【用于测试】
+（1）Test_acc_cost.m    用来比较Adagrad和adam两个算法的收敛性和测试集上的精确率
+参数：learning rate=0.01,迭代次数：1000
+
+（2）training_testing_error.m  用于实现A4.7图，分别测试了不同数据集，不同lambda下的training error 和testing error
+参数：learning rate=0.01,迭代次数：20
+
+（3）Test_sgd_bls.m     用来测试回溯线性搜索，并与其它两个算法进行了比较
+参数：learning rate=0.01,迭代次数：100
+
+
+
